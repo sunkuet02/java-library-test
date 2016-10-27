@@ -50,64 +50,53 @@ public class Main {
         System.out.println("=======================Encrypt-Decrypt Large Data=================================");
 
         File file = new File("largeDataToEncrypt.txt");
-        byte[] bFile = new byte[(int) file.length()];
+        byte[] fileData = new byte[(int) file.length()];
         FileInputStream fileInputStream = new FileInputStream(file);
-        fileInputStream.read(bFile);
+        fileInputStream.read(fileData);
         fileInputStream.close();
 
         Main m = new Main();
-        byte[] encryptedData =  m.encryptDataBytes(publicKey, bFile);
 
-        System.out.println(Base64.encode(encryptedData) + "\n");
+        System.out.println("=========================Single Function check====================================");
 
-        byte[] decryptedData = m.decryptDataBytes(privateKey, encryptedData);
+        Cipher cipherLDE = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipherLDE.init(Cipher.ENCRYPT_MODE, privateKey);
+        byte[] encryptedData = m.cryptDataBytes(cipherLDE, fileData,true);
 
-        System.out.println(new String(decryptedData) + "\n");
+        Cipher cipherLDD = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipherLDD.init(Cipher.DECRYPT_MODE, publicKey);
+        byte[] decryptedData = m.cryptDataBytes(cipherLDD, encryptedData, false);
+
+        System.out.println(new String(decryptedData));
 
     }
 
-    private byte[] encryptDataBytes(PublicKey publicKey, byte[] plainBytes) throws BadPaddingException, ShortBufferException, IllegalBlockSizeException, NoSuchPaddingException, NoSuchAlgorithmException, IOException, KeyStoreException, InvalidKeyException {
-        Cipher enLarge = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-        enLarge.init(Cipher.ENCRYPT_MODE, publicKey);
-
-        int blockSize = enLarge.getBlockSize();
-        int outputSize = enLarge.getOutputSize(blockSize);
-        if(blockSize == 0) {
-            blockSize = outputSize -11;
+    private byte[] cryptDataBytes(Cipher cipher, byte[] dataBytes, boolean encription)
+            throws BadPaddingException, IllegalBlockSizeException, IOException {
+        int blockSize = cipher.getBlockSize();
+        int outputSize = cipher.getOutputSize(blockSize);
+        if (blockSize == 0) {
+            blockSize = outputSize - 11;
         }
-        int inLen = plainBytes.length;
-        int fullBlockCount = inLen / blockSize;
+
+        int readingBlockSize = 0;
+        if(encription) {
+            readingBlockSize = blockSize;
+        } else {
+            readingBlockSize = outputSize;
+        }
+
+        int inLen = dataBytes.length;
+        int fullBlockCount = inLen / readingBlockSize;
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         int inOffset = 0;
         for (int i=0; i<fullBlockCount; i++) {
-            outputStream.write(enLarge.doFinal(plainBytes,inOffset,blockSize));
-            inOffset += blockSize;
+            outputStream.write(cipher.doFinal(dataBytes,inOffset,readingBlockSize));
+            inOffset += readingBlockSize;
         }
         if (inOffset < inLen) {
-            outputStream.write(enLarge.doFinal(plainBytes,inOffset,inLen-inOffset) );
-        }
-        return outputStream.toByteArray();
-    }
-
-    private byte[] decryptDataBytes(PrivateKey privateKey, byte[] encryptedBytes) throws BadPaddingException, ShortBufferException, IllegalBlockSizeException, NoSuchPaddingException, NoSuchAlgorithmException, IOException, KeyStoreException, InvalidKeyException {
-        Cipher enLarge = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-        enLarge.init(Cipher.DECRYPT_MODE, privateKey);
-
-        int blockSize = enLarge.getBlockSize();
-        int outputSize = enLarge.getOutputSize(blockSize);
-
-        int inLen = encryptedBytes.length;
-        int fullBlockCount = inLen / outputSize;
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        int inOffset = 0;
-        for (int i=0; i<fullBlockCount; i++) {
-            outputStream.write(enLarge.doFinal(encryptedBytes,inOffset,outputSize));
-            inOffset += outputSize;
-        }
-        if (inOffset < inLen) {
-            outputStream.write(enLarge.doFinal(encryptedBytes,inOffset,inLen-inOffset) );
+            outputStream.write(cipher.doFinal(dataBytes,inOffset,inLen-inOffset) );
         }
         return outputStream.toByteArray();
     }
