@@ -1,0 +1,11 @@
+#searchItems {
+    width:40%;
+    max-width: 40%;
+    display: inline-block;
+}
+
+#addItems {
+    width: 40%;
+    max-width: 40%;
+    display: inline-block;
+}

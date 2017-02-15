@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/pythonscripts/pythonscripts.iml" filepath="$PROJECT_DIR$/pythonscripts/pythonscripts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/resttesting.iml" filepath="$PROJECT_DIR$/resttesting.iml" />
+    </modules>
+  </component>
+</project>

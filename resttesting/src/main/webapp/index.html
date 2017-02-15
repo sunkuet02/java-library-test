@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Searching App</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="resources/scripts/angular.min.js"></script>
+        <script src="resources/scripts/jquery.min.js"></script>
+        <script type="text/javascript">
+
+            var itemListingApp = angular.module("itemListing", []);
+            var urlPrefix = "http://localhost:8084/test/api";
+
+            itemListingApp.controller("searchItemsController", function ($scope, $http) {
+                $scope.searchResultTable = true;
+
+                $scope.getSearchResult = function () {
+                    var url = urlPrefix + "/item/search?text=" + $scope.txtSearch;
+
+                    $http.get(url).success(function(data) {
+                        $scope.searchResult = data;
+                    }).error(function(data, status, headers, config) {
+                        alert("Error : " + status);
+                    })
+                }
+            });
+
+            itemListingApp.controller("addItemsController" , function ($scope, $http) {
+
+                $scope.addItemToList = function () {
+                    var url = urlPrefix + "/item/add";
+                    var obj = {
+                        'name' : $scope.nameOfItem,
+                        'description' : $scope.itemDescription
+                    };
+
+                    $http.post(url, obj).success(function (data, status) {
+                        alert(data);
+                    }).error(function () {
+                        alert("Error Occured while insertion");
+                    });
+                }
+            });
+
+        </script>
+    </head>
+
+    <body ng-app="itemListing">
+        <div id="searchItems" ng-controller="searchItemsController">
+            <input ng-model="txtSearch" ng-keyup="getSearchResult()" >
+
+            <table ng-show="searchResultTable">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <tr ng-repeat="x in searchResult">
+                    <td width="10%">{{x.id}}</td>
+                    <td width="20%">{{x.name}}</td>
+                    <td width="60%">{{x.description}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="addItems" ng-controller="addItemsController">
+            <input ng-model="nameOfItem" />
+            <input ng-model="itemDescription" />
+            <button ng-click="addItemToList()"><b>Add Item</b></button>
+        </div>
+    </body>
+</html>
