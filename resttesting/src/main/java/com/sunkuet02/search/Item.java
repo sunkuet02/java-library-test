@@ -11,6 +11,11 @@ public class Item {
         this.name = name;
     }
 
+    public Item(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public Item() {
     }
 
