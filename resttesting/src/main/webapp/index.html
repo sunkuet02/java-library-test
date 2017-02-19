@@ -34,8 +34,6 @@
                     };
 
                     $http.post(url, obj).success(function (data, status) {
-                    }).error(function (jqXhr, textStatus, errorThrown) {
-                        alert(textStatus + "+" + errorThrown);
                     });
                 }
             });
