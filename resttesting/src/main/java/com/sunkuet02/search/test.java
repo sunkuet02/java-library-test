@@ -11,12 +11,15 @@ import util.ElasticConnection;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sun on 2/16/17.
  */
 public class test {
-    public static void main(String [] agrs) throws IOException {
+    public static void main(String[] agrs) throws IOException {
         Item item = new Item("sun", "khadok");
 
         ElasticConnection elasticConnection = new ElasticConnection();
@@ -28,16 +31,16 @@ public class test {
             .setQuery(queryBuilder)
             .get();
 
-        for(SearchHit hit : response.getHits().hits()) {
-
-            System.out.println(hit.field("name"));
+        List<Map<String, Object>> searchItems = new ArrayList<>();
+        for (SearchHit hit : response.getHits().getHits()) {
+            searchItems.add(hit.getSource());
+            System.out.println("---");
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        String jsonString = mapper.writeValueAsString(item);
+        String jsonString = mapper.writeValueAsString(searchItems);
 
         System.out.println(jsonString);
-
 
 
     }

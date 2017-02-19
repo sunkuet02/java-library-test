@@ -14,7 +14,7 @@
                 $scope.searchResultTable = true;
 
                 $scope.getSearchResult = function () {
-                    var url = urlPrefix + "/item/search?text=" + $scope.txtSearch;
+                    var url = urlPrefix + "/item/es/search?text=" + $scope.txtSearch;
 
                     $http.get(url).success(function(data) {
                         $scope.searchResult = data;
@@ -27,7 +27,7 @@
             itemListingApp.controller("addItemsController" , function ($scope, $http) {
 
                 $scope.addItemToList = function () {
-                    var url = urlPrefix + "/item/add";
+                    var url = urlPrefix + "/item/es/additem";
                     var obj = {
                         'name' : $scope.nameOfItem,
                         'description' : $scope.itemDescription

@@ -16,6 +16,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import util.ElasticConnection;
 import util.JsonConverter;
 import util.MySqlConnection;
@@ -29,6 +30,9 @@ import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 
@@ -124,7 +128,7 @@ public class Entry {
     @GET
     @Path("/es/search")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response searchItemOnES(@QueryParam("text") String text) throws UnknownHostException {
+    public Response searchItemOnES(@QueryParam("text") String text) throws IOException {
         ElasticConnection elasticConnection = new ElasticConnection();
         Client client = elasticConnection.createConnection("elasticsearch", "localhost", 9300);
 
@@ -133,7 +137,15 @@ public class Entry {
             .setTypes("item")
             .setQuery(queryBuilder)
             .get();
-        logger.info(response.getHits().getHits());
-        return Response.status(Response.Status.OK).entity(response.getHits()).build();
+
+        List<Map<String, Object>> searchResultItems = new ArrayList<>();
+        for(SearchHit hit : response.getHits().getHits()) {
+            searchResultItems.add(hit.getSource());
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(searchResultItems);
+
+        return Response.status(Response.Status.OK).entity(jsonString).build();
     }
 }
