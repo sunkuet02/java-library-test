@@ -1,0 +1,12 @@
+div.login {
+    position: absolute;
+    top: 40%;
+    right: 40%;
+    width: 20%;
+    height: 20%;
+    border: 3px solid #73AD21;
+}
+
+form label {
+    width: 10%;
+}
