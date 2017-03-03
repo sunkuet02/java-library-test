@@ -1,4 +1,4 @@
-package com.sunkuet02.todoapplication.Models;
+package com.sunkuet02.todoapplication.models;
 
 /**
  * Created by sun on 2/28/17.

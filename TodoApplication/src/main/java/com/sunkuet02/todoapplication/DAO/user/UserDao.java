@@ -1,12 +1,12 @@
-package com.sunkuet02.todoapplication.DAO.user;
+package com.sunkuet02.todoapplication.dao.user;
 
-import com.sunkuet02.todoapplication.Models.User;
+import com.sunkuet02.todoapplication.models.User;
 
 /**
  * Created by sun on 2/28/17.
  */
 public interface UserDao {
-    void addUser(User user);
+    int addUser(User user);
 
     User findUser(String username);
 }

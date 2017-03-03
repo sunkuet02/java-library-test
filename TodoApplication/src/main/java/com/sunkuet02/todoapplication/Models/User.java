@@ -1,24 +1,16 @@
-package com.sunkuet02.todoapplication.Models;
-
-import javax.persistence.*;
+package com.sunkuet02.todoapplication.models;
 
 /**
  * Created by sun on 2/28/17.
  */
-@Entity
-@Table(name="users")
 public class User {
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+
     int id;
 
-    @Column
     String username;
 
-    @Column
     String password;
 
-    @Column
     String email;
 
     public User() {
@@ -33,6 +25,10 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {

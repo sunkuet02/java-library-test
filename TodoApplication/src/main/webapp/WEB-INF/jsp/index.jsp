@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: sun
@@ -7,5 +8,11 @@
 --%>
 <%@ include file="header.jsp"%>
 
+<div>
+    <spring:url value="/signup" var="signupUrl" />
+    <spring:url value="/signin" var="signinUrl" />
+    <button onclick="signin.jsp">Signin</button>
+    <button onclick="${signupUrl}">Signup</button>
+</div>
 
 <%@ include file="footer.jsp"%>
