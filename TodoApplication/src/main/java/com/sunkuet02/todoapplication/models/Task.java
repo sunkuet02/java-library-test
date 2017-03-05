@@ -1,5 +1,6 @@
 package com.sunkuet02.todoapplication.models;
 
+import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ public class Task {
 
     String description;
 
-    Date date;
+    long time;
 
     public Task() {
     }
@@ -23,14 +24,14 @@ public class Task {
         this.username = username;
         this.heading = heading;
         this.description = description;
-        this.date = new Date();
+        this.time = new Date().getTime();
     }
 
-    public Task(String username, String heading, String description, Date date) {
+    public Task(String username, String heading, String description, long time) {
         this.username = username;
         this.heading = heading;
         this.description = description;
-        this.date = date;
+        this.time = time;
     }
 
     public int getId() {
@@ -65,11 +66,11 @@ public class Task {
         this.description = description;
     }
 
-    public Date getDate() {
-        return date;
+    public long getTime() {
+        return time;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTime(long time) {
+        this.time = time;
     }
 }

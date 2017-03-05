@@ -1,6 +1,6 @@
 CREATE TABLE tasks (
   id          INT AUTO_INCREMENT,
-  usrname     VARCHAR(25) NOT NULL,
+  username     VARCHAR(25) NOT NULL,
   heading     VARCHAR(100),
   description VARCHAR(200),
   time        DATE,

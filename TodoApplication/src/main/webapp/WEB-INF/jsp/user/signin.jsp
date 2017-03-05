@@ -5,7 +5,7 @@
   Date: 3/1/17
   Time: 4:43 PM
 --%>
-<%@include file="header.jsp"%>
+<%@include file="../header.jsp"%>
 
 
 <div>
@@ -25,4 +25,4 @@
     </div>
 </div>
 
-<%@ include file="footer.jsp" %>
+<%@ include file="../footer.jsp" %>

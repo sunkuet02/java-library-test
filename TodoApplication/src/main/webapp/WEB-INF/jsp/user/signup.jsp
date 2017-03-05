@@ -5,9 +5,19 @@
   Date: 2/28/17
   Time: 1:43 PM
 --%>
-<%@ include file="header.jsp" %>
+<%@ include file="../header.jsp" %>
 
 <script>
+    function _validate() {
+        var pass = document.getElementById('password').value;
+        var rePass = document.getElementById('repassword').value;
+        if(pass != rePass) {
+            alert("Password doesn't match");
+            return;
+        }
+
+        document.getElementById('signupform').submit();
+    }
 </script>
 
 <div>
@@ -30,9 +40,9 @@
             <input name="email" id="email" type="email" required>
             <br />
 
-            <input type="submit" name="submit" value="submit" />
+            <input type="button" name="submitbtn" value="submit" onclick="_validate();"/>
         </form>
     </div>
 </div>
 
-<%@ include file="footer.jsp" %>
+<%@ include file="../footer.jsp" %>

@@ -46,7 +46,8 @@ public class TaskDaoImpl implements TaskDao {
 
     @Override
     public int addTask(Task task) {
-        String sql = "INSERT INTO tasks (username, heading, description, date) VALUES (:username, :heading, :description, :date)";
+        String sql = "INSERT INTO tasks (username, heading, description, time) VALUES (:username, :heading, :description, :time)";
+
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcTemplate.update(sql, getSqlParameterSourceFromUser(task), keyHolder);
         task.setId(keyHolder.getKey().intValue());
@@ -60,7 +61,7 @@ public class TaskDaoImpl implements TaskDao {
         mapSqlParameterSource.addValue("username", task.getUsername());
         mapSqlParameterSource.addValue("heading", task.getHeading());
         mapSqlParameterSource.addValue("description", task.getDescription());
-        mapSqlParameterSource.addValue("date", task.getDate());
+        mapSqlParameterSource.addValue("time", task.getTime());
         return mapSqlParameterSource;
     }
 
@@ -73,7 +74,7 @@ public class TaskDaoImpl implements TaskDao {
             task.setUsername(resultSet.getString("username"));
             task.setHeading(resultSet.getString("heading"));
             task.setDescription(resultSet.getString("description"));
-            task.setDate(resultSet.getDate("date"));
+            task.setTime(resultSet.getLong("time"));
 
             return task;
         }

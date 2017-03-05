@@ -7,10 +7,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ include file="header.jsp" %>
+<script type="text/javascript">
+    function validate_() {
+        var time = document.getElementById('date').value;
+        alert(time);
+        document.getElementById('time').value = new Date(time).getTime();
+
+        document.getElementById("addTaskForm").submit();
+    }
+</script>
 
 <div>
-    <spring:url value="/task/add" var="taskAddUrl" />
-    <form id="signupform" action="${taskAddUrl}" method="post">
+    <spring:url value="/task/add" var="taskAddUrl"/>
+    <form id="addTaskForm" action="${taskAddUrl}" method="post">
         <label for="heading"> Heading </label>
         <input name="heading" id="heading" type="text" required>
         <br/>
@@ -20,10 +29,11 @@
         <br/>
 
         <label for="date"> Date </label>
-        <input name="date" id="date" type="datetime">
-        <br />
+        <input name="date" id="date" type="datetime"> <b>Format : MM/DD/YYYY HH:MM</b>
+        <br/>
 
-        <input type="submit" name="submit" value="submit"/>
+        <input type="hidden" name="time" id="time">
+        <input type="button" name="submitform" value="Add" onclick="validate_();"/>
     </form>
 </div>
 

@@ -28,6 +28,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void addTask(Task task) {
-
+        taskDao.addTask(task);
     }
 }
