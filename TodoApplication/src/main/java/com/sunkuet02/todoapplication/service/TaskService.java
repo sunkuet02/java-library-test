@@ -12,4 +12,6 @@ public interface TaskService {
     List<Task> getAllTask(String username);
 
     void addTask(Task task);
+
+    List<Task> search(String username, String text);
 }

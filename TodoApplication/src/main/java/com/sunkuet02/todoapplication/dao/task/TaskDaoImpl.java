@@ -55,6 +55,16 @@ public class TaskDaoImpl implements TaskDao {
         return task.getId();
     }
 
+    @Override
+    public List<Task> search(String username, String text) {
+        String sql = "SELECT * FROM tasks WHERE username=:username AND (heading LIKE '%"+text+"%' OR description LIKE '%"+text+"%')";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", username);
+
+        return namedParameterJdbcTemplate.query(sql, params, new TaskMapper());
+    }
+
     private SqlParameterSource getSqlParameterSourceFromUser(Task task) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("id", task.getId());

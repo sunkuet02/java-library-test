@@ -73,6 +73,12 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>LATEST</version>
 		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>2.4.4</version>
+		</dependency>
+	
 	
 	</dependencies>
 	<build>

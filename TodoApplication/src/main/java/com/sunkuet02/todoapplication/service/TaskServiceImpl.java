@@ -30,4 +30,9 @@ public class TaskServiceImpl implements TaskService {
     public void addTask(Task task) {
         taskDao.addTask(task);
     }
+
+    @Override
+    public List<Task> search(String username, String text) {
+        return taskDao.search(username, text);
+    }
 }

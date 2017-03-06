@@ -12,4 +12,6 @@ public interface TaskDao {
     List<Task> getAllTask(String username);
 
     int addTask(Task task);
+
+    List<Task> search(String username, String text);
 }

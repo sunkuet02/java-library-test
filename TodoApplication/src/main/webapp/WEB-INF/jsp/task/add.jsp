@@ -10,9 +10,7 @@
 <script type="text/javascript">
     function validate_() {
         var time = document.getElementById('date').value;
-        alert(time);
         document.getElementById('time').value = new Date(time).getTime();
-
         document.getElementById("addTaskForm").submit();
     }
 </script>

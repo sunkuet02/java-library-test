@@ -10,5 +10,6 @@
 <head>
     <title>ToDoAppLicaTion</title>
     <script src="/resources/scripts/jquery.min.js"></script>
+    <script src="/resources/scripts/angular.min.js"></script>
 </head>
 <body>
